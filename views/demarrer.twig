@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+		<link rel="stylesheet" href="/css/style.css">
+		<title>Pokegame</title>
+	</head>
+	<body>
+		<header>
+			<nav class="navbar navbar-expand-lg bg-light">
+				<div class="container">
+					<div class="collapse navbar-collapse" id="navbarNav">
+						<ul class="navbar-nav">
+							<li class="nav-item">
+								<a class="nav-link " href="/login">Connexion</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="/addUser">Inscription</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link active" aria-current="page" href="#">Page dresseur</a>
+							</li>
+							<li class="nav-item">
+								<a href="/resetUser" type="submit" class="nav-link ">déconnexion</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+			</nav>
+		</header>
+		<main class="container">
+			<section class="img3">
+				{{pokeconnected}}
+				<form method="post" {% if currentAction == "update" %} action="/updatePokemon/{{pokemon.id}}" {% else %} action="/pokemon" {% endif %}>
+
+					<div class="offset-1">
+						<label for="name">Nom de pokemon</label>
+					</div>
+					<div class="offset-1">
+						<select name="pokeName" id="pokeName">
+							<option>Choix du pokemon</option>
+							<option value="bulbizare">bulbizare</option>
+							<option value="salameche">Salamèche</option>
+							<option value="carabaffe">Carabaffe</option>
+							<option value="chenipan">chenipan</option>
+							<option value="papilusion">Papilusion</option>
+							<option value="nosferalto">Nosferalto</option>
+							<option value="miaouss">Miaouss</option>
+							<option value="feunard">Feunard</option>
+							<option value="racaillou">Racaillou</option>
+							<option value="pikachu">Pikachu</option>
+						</select>
+
+					</div>
+					<div class="offset-1">
+						<label for="level">Niveau</label>
+					</div>
+					<div class="offset-1">
+						<select name="pokeLevel" id="pokeLevel">
+							<option>Choix du niveau</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+						</select>
+					</div>
+					<div class="offset-1">
+						<label for="name">Type</label>
+					</div>
+					<div class="offset-1">
+						<select name="pokeType" id="pokeType">
+							<option>Choix du type</option>
+							<option value="Feu">Feu</option>
+							<option value="Plante">Plante</option>
+							<option value="Eau">Eau</option>
+							<option value="Insecte">Insecte</option>
+							<option value="Vol">Vol</option>
+							<option value="Roche">Roche</option>
+							<option value="Tenebre">Tenebre</option>
+							<option value="Electrik">Electrik</option>
+							<option value="Poison">Poison</option>
+						</select>
+					</div>
+					<br>
+					<span>
+						<button type="submit" class="btn btn-primary col-4 ">valide ton pokemon</button>
+					</span>
+				</form>
+			</section>
+			<section class="row">
+				{% for pokemon in pokemons %}
+					<div class=" fond m-5 p-3 col-4" style="background: url(images/pokefond/{{pokemon.pokeType}}.jpg) no-repeat">
+						<div class="fond card " style="background-color: {{pokemon.pokeColor}}">
+							<div class="card-body">
+								<h5 class="card-title">{{pokemon.pokeName}}</h5>
+								<img src="/images/{{pokemon.pokeName}}.png" alt="" class="pokeAnim img-fluid">
+								<p class="card-text">{{pokemon.pokeLevel}}</p>
+								<p class="card-text">{{pokemon.pokeType}}</p>
+								<a href="/deletePokemon/{{pokemon.id}}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Supprimer la carte</a>
+								<a href="/updatePokemon/{{pokemon.id}}" class="lien btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal">Modifier</a>
+							</div>
+
+							<!-- Modal -->
+							<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel" style="text-align-center">Etes vous sur de vouloir supprimer?</h5>
+										</div>
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
+										<a href="/deletePokemon/{{pokemon.id}}" class="btn btn-danger">Oui, supprime cette carte</a>
+									</div>
+								</div>
+							</div>
+							<!--  Fin Modal -->
+
+							<!-- updateModal -->
+							<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="updateModalLabel" style="text-align-center">Etes vous sur de vouloir modifier?</h5>
+										</div>
+
+										<form method="post" {% if currentAction == "update" %} action="/updatePokemon/{{pokemon.id}}" {% else %} action="/pokemon" {% endif %}>
+
+											<div class="offset-1">
+												<label for="name">Nom de pokemon</label>
+											</div>
+											<div class="offset-1">
+												<select name="pokeName" id="pokeName">
+													<option>Choix du pokemon</option>
+													<option value="bulbizare">bulbizare</option>
+													<option value="salameche">Salamèche</option>
+													<option value="carabaffe">Carabaffe</option>
+													<option value="chenipan">chenipan</option>
+													<option value="papilusion">Papilusion</option>
+													<option value="nosferalto">Nosferalto</option>
+													<option value="miaouss">Miaouss</option>
+													<option value="feunard">Feunard</option>
+													<option value="racaillou">Racaillou</option>
+													<option value="pikachu">Pikachu</option>
+												</select>
+
+											</div>
+											<div class="offset-1">
+												<label for="level">Niveau</label>
+											</div>
+											<div class="offset-1">
+												<select name="pokeLevel" id="pokeLevel">
+													<option>Choix du niveau</option>
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+												</select>
+											</div>
+											<div class="offset-1">
+												<label for="name">Type</label>
+											</div>
+											<div class="offset-1">
+												<select name="pokeType" id="pokeType">
+													<option>Choix du type</option>
+													<option value="Feu">Feu</option>
+													<option value="Plante">Plante</option>
+													<option value="Eau">Eau</option>
+													<option value="Insecte">Insecte</option>
+													<option value="Vol">Vol</option>
+													<option value="Roche">Roche</option>
+													<option value="Tenebre">Tenebre</option>
+													<option value="Electrik">Electrik</option>
+													<option value="Poison">Poison</option>
+												</select>
+											</div>
+											<br>
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
+											<a href="/updatePokemon/{{pokemon.id}}" class="btn btn-danger">Oui, modifie cette carte</a>
+										</form>
+									</div>
+								</div>
+							</div>
+							<!--  Fin updateModal -->
+						</div>
+					</div>
+				{% endfor %}
+			</section>
+		</main>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+	</body>
+</html></body></html>
