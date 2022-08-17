@@ -125,7 +125,7 @@
 											<h5 class="modal-title" id="updateModalLabel" style="text-align-center">Etes vous sur de vouloir modifier?</h5>
 										</div>
 
-										<form method="post" {% if currentAction == "update" %} action="/updatePokemon/{{pokemon.id}}" {% else %} action="/pokemon" {% endif %}>
+										<form method="post" action="/updatePokemon/{{pokemon.id}}">
 
 											<div class="offset-1">
 												<label for="name">Nom de pokemon</label>
@@ -176,7 +176,7 @@
 											</div>
 											<br>
 											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
-											<a href="/updatePokemon/{{pokemon.id}}" class="btn btn-danger">Oui, modifie cette carte</a>
+											<input type="submit">
 										</form>
 									</div>
 								</div>

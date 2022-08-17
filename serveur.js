@@ -17,13 +17,14 @@ app.use(router);
 router.use(userRouter);
 router.use(pokeRouter);
 
-app.listen(process.env.PORT),(err)=>{
+app.listen(process.env.PORT,(err)=>{
+    
     if (err) {
         console.log(err);
     }else{
         console.log(`connected at ${process.env.APP_URL}`);
     }
-}
+})
 
 mongoose.connect(db,(err)=>{
     if (err) {
