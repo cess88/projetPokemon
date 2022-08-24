@@ -11,6 +11,7 @@ export class pokeController {
     static async postPokemon(req){
         req.body.trainer = req.session.user
         req.body.pokeColor = colortab[req.body.pokeLevel - 1]  //****let colortab****/
+        req.pokeType = req.pokeType.toLowerCase()
         let poke = new pokeModel(req.body)
         await poke.save()
         return poke
@@ -24,6 +25,7 @@ export class pokeController {
         if (req.body.pokeLevel) {
             req.body.pokeColor = colortab[req.body.pokeLevel - 1]
         }
+        req.pokeType = req.pokeType.toLowerCase()
         let pokemon = await pokeModel.updateOne({ _id: req.params.id },req.body)
         return pokemon
     }
