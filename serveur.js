@@ -34,4 +34,8 @@ mongoose.connect(db,(err)=>{
     }
 })
 
+app.get('*', (req,res)=>{
+    res.redirect('/pokemons')
+})
+
 export default router
